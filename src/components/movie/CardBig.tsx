@@ -1,6 +1,7 @@
 'use client'
 
 import { Card, CardBody, Chip, Image } from '@nextui-org/react'
+import MovieChip from './MovieChip'
 
 interface Movie {
   image: string
@@ -32,14 +33,7 @@ export default function MovieCardBig({ movie }: { movie: Movie }) {
             <p className="text-default-500">{movie.rating}</p>
             <div className="flex gap-2">
               {movie.tags.map((chip, index) => (
-                <Chip
-                  className="h-5 text-xs py-2"
-                  size="sm"
-                  color="primary"
-                  key={index}
-                >
-                  {chip}
-                </Chip>
+                <MovieChip key={index} chips={[chip]}></MovieChip>
               ))}
             </div>
             <p>{movie.duration}</p>
