@@ -4,8 +4,8 @@ import BackButton from '@/components/Buttons/Back'
 import Bookmark from '@/components/Buttons/Bookmark'
 import Cast from '@/components/movie/Cast'
 import MovieChip from '@/components/movie/MovieChip'
-import { Button, Image } from '@nextui-org/react'
-import { useEffect, useState } from 'react'
+import { Button, Image, Spinner } from '@nextui-org/react'
+import useSWR from 'swr'
 
 // const data = {
 //   adult: false,
@@ -448,15 +448,25 @@ import { useEffect, useState } from 'react'
 // }
 
 type MovieData = {
+  backdrop_path: string
   title: string
   vote_average: number
   original_title: string
   name: string
   runtime: number
+  genres: []
+  genre: { name: string }
+  spoken_languages: { english_name: string }[] | null
+  overview: string
+  credits: { cast: [] }
 }
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [data, setData] = useState<MovieData | null>(null)
+  const fetcher = (url: string) => fetch(url).then((res) => res.json())
+  const { data, error, isLoading } = useSWR<MovieData>(
+    `/api/movie/${params.id}`,
+    fetcher
+  )
 
   const lengthConverter = (minutes: number) => {
     const hours = Math.floor(minutes / 60)
@@ -464,29 +474,15 @@ export default function Page({ params }: { params: { id: string } }) {
     return `${hours}h ${remainingMinutes}min`
   }
 
-  useEffect(() => {
-    const getMovieData = async () => {
-      const url = `https://api.themoviedb.org/3/movie/${params.id}?append_to_response=credits&language=en-US`
-      const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer ' + process.env.API_KEY,
-        },
-      }
-      try {
-        const res = await fetch(url, options)
-        if (!res.ok) {
-          throw new Error('Failed to fetch data: ' + res.status)
-        }
-        const data = await res.json()
-        setData(data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    getMovieData()
-  }, [])
+  if (isLoading) {
+    return (
+      <main className="h-screen w-screen flex justify-center items-center">
+        <Spinner size="lg"></Spinner>
+      </main>
+    )
+  }
+
+  if (!data) return null
 
   return (
     <main className="flex flex-col h-screen">
@@ -494,10 +490,11 @@ export default function Page({ params }: { params: { id: string } }) {
         <BackButton className="z-10 absolute top-5 left-5" />
         <Image
           className="z-0"
-          src="/spiderman.png"
+          src={'https://image.tmdb.org/t/p/original/' + data.backdrop_path}
           width="100%"
           height={300}
           alt="spiderman"
+          radius="none"
         ></Image>
       </section>
       <section className="rounded-xl z-20 bg-white h-full p-6 flex flex-col gap-4 overflow-scroll scrollbar-hide">
@@ -526,7 +523,7 @@ export default function Page({ params }: { params: { id: string } }) {
           <p className="text-default-500">{data.vote_average}/10 IMDb</p>
         </div>
         <div className="flex gap-2">
-          {data.genres.map((genre, index) => (
+          {data.genres.map((genre: MovieData, index: number) => (
             <MovieChip chips={[genre.name]} key={index} />
           ))}
         </div>
@@ -537,7 +534,7 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             <p className="text-default-500">Language</p>
-            {data.spoken_languages[0].english_name}
+            {data.spoken_languages && data.spoken_languages[0].english_name}
           </div>
           <div>
             <p className="text-default-500">Rating</p>

@@ -1,8 +1,17 @@
+'use client'
+
 import React, { SVGProps } from 'react'
+import { useRouter } from 'next/navigation'
 
 export function BackButton(props: SVGProps<SVGSVGElement>) {
+  const router = useRouter()
+
+  function handleClick() {
+    router.back()
+  }
   return (
     <svg
+      onClick={() => handleClick()}
       xmlns="http://www.w3.org/2000/svg"
       width="3em"
       height="3em"
