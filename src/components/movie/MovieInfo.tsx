@@ -4,6 +4,7 @@ import { Button, Image } from '@nextui-org/react'
 import Bookmark from '../Buttons/Bookmark'
 import MovieChip from './MovieChip'
 import BackButton from '../Buttons/Back'
+import Cast from './Cast'
 
 export default function MovieInfo({ data }) {
   const lengthConverter = (minutes: number) => {
