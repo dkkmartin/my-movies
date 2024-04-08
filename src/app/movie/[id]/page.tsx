@@ -448,6 +448,8 @@ import useSWR from 'swr'
 // }
 
 type MovieData = {
+  status: number
+  message: string
   backdrop_path: string
   title: string
   vote_average: number
@@ -482,7 +484,12 @@ export default function Page({ params }: { params: { id: string } }) {
     )
   }
 
-  if (!data) return null
+  if (error || !data || data.status === 404)
+    return (
+      <main className="h-screen w-screen flex justify-center items-center">
+        <h1>Uh, oh. Something went wrong...</h1>
+      </main>
+    )
 
   return (
     <main className="flex flex-col h-screen">
@@ -493,11 +500,12 @@ export default function Page({ params }: { params: { id: string } }) {
           src={'https://image.tmdb.org/t/p/original/' + data.backdrop_path}
           width="100%"
           height={300}
-          alt="spiderman"
+          alt="Cover image"
           radius="none"
+          loading="eager"
         ></Image>
       </section>
-      <section className="rounded-xl z-20 bg-white h-full p-6 flex flex-col gap-4 overflow-scroll scrollbar-hide">
+      <section className="rounded-xl z-20 -mt-4 bg-white h-full p-6 flex flex-col gap-4 overflow-scroll scrollbar-hide">
         <div className="flex items-center w-full justify-between">
           <div className="flex flex-col">
             <h1 className="font-bold text-3xl">{data.title}</h1>

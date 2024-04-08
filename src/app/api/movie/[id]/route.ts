@@ -14,5 +14,9 @@ export async function GET(
     return Response.json(data)
   } catch (err) {
     console.log(err)
+    return Response.json({
+      status: 404,
+      message: err,
+    })
   }
 }
