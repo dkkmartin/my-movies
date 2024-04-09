@@ -2,9 +2,10 @@
 
 import BackButton from '@/components/Buttons/Back'
 import Bookmark from '@/components/Buttons/Bookmark'
+import LoadingSpinnerScreen from '@/components/loading/LoadingSpinnerScreen'
 import Cast from '@/components/movie/Cast'
 import MovieChip from '@/components/movie/MovieChip'
-import { Button, Image, Spinner } from '@nextui-org/react'
+import { Button, Image } from '@nextui-org/react'
 import useSWR from 'swr'
 
 // const data = {
@@ -477,11 +478,7 @@ export default function Page({ params }: { params: { id: string } }) {
   }
 
   if (isLoading) {
-    return (
-      <main className="h-screen w-screen flex justify-center items-center">
-        <Spinner size="lg"></Spinner>
-      </main>
-    )
+    return <LoadingSpinnerScreen />
   }
 
   if (error || !data || data.status === 404)
@@ -528,7 +525,9 @@ export default function Page({ params }: { params: { id: string } }) {
             width={20}
             alt="Star"
           ></Image>
-          <p className="text-default-500">{data.vote_average}/10 IMDb</p>
+          <p className="text-default-500">
+            {data.vote_average.toFixed(1)}/10 IMDb
+          </p>
         </div>
         <div className="flex gap-2">
           {data.genres.map((genre: MovieData, index: number) => (

@@ -1,35 +1,49 @@
+'use client'
+
 import { Button } from '@nextui-org/react'
 import MovieCard from '../movie/Card'
-
-const movies = [
-  {
-    title: 'Spiderman: No Way Home',
-    image: '/spiderman.png',
-    rating: '9.1/10 IMDb',
-  },
-  {
-    title: 'Spiderman: No Way Home',
-    image: '/spiderman.png',
-    rating: '9.1/10 IMDb',
-  },
-  {
-    title: 'Spiderman: No Way Home',
-    image: '/spiderman.png',
-    rating: '9.1/10 IMDb',
-  },
-  {
-    title: 'Spiderman: No Way Home',
-    image: '/spiderman.png',
-    rating: '9.1/10 IMDb',
-  },
-  {
-    title: 'Spiderman: No Way Home',
-    image: '/spiderman.png',
-    rating: '9.1/10 IMDb',
-  },
-]
+import useSWR from 'swr'
+import LoadingSpinner from '../loading/LoadingSpinner'
 
 export default function NowShowing() {
+  const fetcher = (url: string) => fetch(url).then((res) => res.json())
+  const {
+    data: movieData,
+    error: movieDataError,
+    isLoading: movieDataIsLoading,
+  } = useSWR(`/api/movie/showing`, fetcher, {
+    refreshInterval: 0,
+  })
+
+  if (movieDataIsLoading) {
+    return (
+      <>
+        <div className="flex justify-between px-4">
+          <h1 className="text-lg font-bold">Popular</h1>
+          <Button color="default" variant="bordered" radius="full" size="sm">
+            See more
+          </Button>
+        </div>
+        <LoadingSpinner></LoadingSpinner>
+      </>
+    )
+  }
+
+  if (movieDataError || !movieData || movieData.status === 404)
+    return (
+      <>
+        <div className="flex justify-between px-4">
+          <h1 className="text-lg font-bold">Popular</h1>
+          <Button color="default" variant="bordered" radius="full" size="sm">
+            See more
+          </Button>
+        </div>
+        <main className="flex justify-center items-center py-20">
+          <h1>Uh, oh. Something went wrong...</h1>
+        </main>
+      </>
+    )
+
   return (
     <>
       <div className="flex justify-between px-4">
@@ -40,7 +54,7 @@ export default function NowShowing() {
       </div>
 
       <section className="flex gap-4 overflow-auto px-4 pl-4 no-scrollbar">
-        {movies.map((movie, index) => (
+        {movieData.results.map((movie: any, index: number) => (
           <div key={index} className="w-[180px] my-4">
             <MovieCard movie={movie}></MovieCard>
           </div>
