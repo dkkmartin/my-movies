@@ -1,4 +1,4 @@
-export async function GET(response: Response) {
+export async function GET(request: Request) {
   const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=${process.env.API_KEY}`
   try {
     const res = await fetch(url)

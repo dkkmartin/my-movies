@@ -1,5 +1,5 @@
 export async function GET(
-  response: Response,
+  request: Request,
   { params }: { params: { id: string } }
 ) {
   const id = params.id
