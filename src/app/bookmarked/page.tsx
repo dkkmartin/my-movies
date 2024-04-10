@@ -7,6 +7,28 @@ import Header from '@/components/header/Header'
 import useSWR from 'swr'
 
 export default function Bookmarked() {
+  function SendData(body: object) {
+    const fetcher = (url: string) =>
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      }).then((res) => res.json())
+    const { data, error, isLoading } = useSWR(`/api/bookmark/add`, fetcher, {
+      refreshInterval: 0,
+    })
+    return { data, error, isLoading }
+  }
+
+  const response = SendData({
+    media_type: 'movie',
+    media_id: 550,
+    favorite: true,
+  })
+  console.log(response.data)
+
   return (
     <>
       <Header></Header>
