@@ -4,7 +4,7 @@ export async function GET(
 ) {
   const id = params.id
 
-  const url = `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits&language=en-US&api_key=${process.env.API_KEY}`
+  const url = `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,videos&language=en-US&api_key=${process.env.API_KEY}`
   try {
     const res = await fetch(url)
     if (!res.ok) {
