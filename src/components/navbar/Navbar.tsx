@@ -7,7 +7,9 @@ import {
   Link,
   Button,
 } from '@nextui-org/react'
-import Image from 'next/image'
+import FluentMoviesAndTv16Regular from '../svg/FluentMoviesAndTv16Regular'
+import FluentTicketDiagonal16Regular from '../svg/FluentTicketDiagonal16Regular'
+import MaterialSymbolsLightBookmarkOutline from '../svg/MaterialSymbolsLightBookmarkOutline'
 
 export default function NavigationBar() {
   return (
@@ -15,22 +17,12 @@ export default function NavigationBar() {
       <NavbarContent className="sm:flex gap-4 w-full justify-around" justify="">
         <NavbarItem>
           <Button isIconOnly as={Link} color="primary" href="/" variant="light">
-            <Image
-              src={'/FluentMoviesAndTv16Regular.svg'}
-              width={28}
-              height={28}
-              alt="Home"
-            ></Image>
+            <FluentMoviesAndTv16Regular></FluentMoviesAndTv16Regular>
           </Button>
         </NavbarItem>
         <NavbarItem>
           <Button isIconOnly as={Link} color="primary" href="#" variant="light">
-            <Image
-              src={'/FluentTicketDiagonal24Regular.svg'}
-              width={28}
-              height={28}
-              alt="Home"
-            ></Image>
+            <FluentTicketDiagonal16Regular></FluentTicketDiagonal16Regular>
           </Button>
         </NavbarItem>
         <NavbarItem>
@@ -41,12 +33,7 @@ export default function NavigationBar() {
             href="/bookmarked"
             variant="light"
           >
-            <Image
-              src={'/MaterialSymbolsBookmarkOutline.svg'}
-              width={28}
-              height={28}
-              alt="Home"
-            ></Image>
+            <MaterialSymbolsLightBookmarkOutline></MaterialSymbolsLightBookmarkOutline>
           </Button>
         </NavbarItem>
       </NavbarContent>

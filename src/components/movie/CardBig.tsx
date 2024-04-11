@@ -4,6 +4,7 @@ import { Card, CardBody, Image } from '@nextui-org/react'
 import MovieChipWithID from './MovieChipWithID'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
+import StreamlineInterfaceTimeClockCircleClockLoadingMeasureTimeCircle from '../svg/StreamlineInterfaceTimeClockCircleClockLoadingMeasureTimeCircle'
 
 interface Movie {
   id: number
@@ -67,7 +68,7 @@ export default function MovieCardBig({ movie }: { movie: Movie }) {
               ))}
             </div>
             <div className="flex gap-2 items-center">
-              <Image src="/MdiClockOutline.svg" width={20} alt="Star"></Image>
+              <StreamlineInterfaceTimeClockCircleClockLoadingMeasureTimeCircle></StreamlineInterfaceTimeClockCircleClockLoadingMeasureTimeCircle>
               {movieDurationIsLoading ? null : (
                 <p>{lengthConverter(movieDuration && movieDuration.runtime)}</p>
               )}

@@ -18,12 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Providers>
-        <body className={inter.className + ' max-w-[530px] m-auto'}>
+      <body className={inter.className + ' max-w-[530px] m-auto'}>
+        <Providers>
           {children}
           <NavigationBar></NavigationBar>
-        </body>
-      </Providers>
+        </Providers>
+      </body>
     </html>
   )
 }
