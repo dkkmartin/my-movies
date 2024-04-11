@@ -1,4 +1,5 @@
 import { Switch } from '@nextui-org/react'
+import { ThemeSwitcher } from './ThemeSwitcher'
 
 export default function Header() {
   return (
@@ -6,11 +7,7 @@ export default function Header() {
       <h1 className="text-2xl col-start-2 place-self-center font-bold">
         My movies
       </h1>
-      <Switch
-        className="col-start-3 place-self-end"
-        defaultSelected
-        aria-label="Switch theme"
-      ></Switch>
+      <ThemeSwitcher></ThemeSwitcher>
     </header>
   )
 }
