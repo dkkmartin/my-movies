@@ -19,6 +19,7 @@ export function ThemeSwitcher() {
 
   return (
     <Switch
+      className="place-self-end"
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
       defaultSelected
       size="lg"
