@@ -1,4 +1,4 @@
-import React, { SVGProps, useState } from 'react'
+import React, { SVGProps, useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { useLocalStorage } from '@uidotdev/usehooks'
 
@@ -6,6 +6,20 @@ export function Bookmark(props: SVGProps<SVGSVGElement>) {
   const params = useParams<{ id: string }>()
   const [bookmarks, saveBookmark] = useLocalStorage<string[]>('bookmarks', [])
   const [clicked, isClicked] = useState(false)
+
+  useEffect(() => {
+    const bookmarks = localStorage.getItem('bookmarks')
+    if (bookmarks !== null) {
+      const parsedBookmarks: string[] | null = JSON.parse(bookmarks)
+      if (parsedBookmarks !== null) {
+        parsedBookmarks.map((id: string) => {
+          if (id === params.id) {
+            isClicked(true)
+          }
+        })
+      }
+    }
+  }, [params.id])
 
   const handleClick = () => {
     const currentBookmarks = bookmarks || []

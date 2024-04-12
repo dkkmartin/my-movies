@@ -14,8 +14,8 @@ export function StreamlineInterfaceTimeClockCircleClockLoadingMeasureTimeCircle(
       <g
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
         <circle cx="7" cy="7" r="6.5"></circle>
         <path d="M7 4.5V7l2.54 2.96"></path>

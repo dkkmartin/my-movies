@@ -1,8 +1,8 @@
 'use client'
 
 import Header from '@/components/header/Header'
-import MovieCard from '@/components/movie/Card'
-import { useState } from 'react'
+import MovieCardBig from '@/components/movie/CardBig'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 export default function Bookmarked() {
@@ -29,29 +29,45 @@ export default function Bookmarked() {
   // })
   // console.log(response.data)
 
-  const [storage, setStorage] = useState(() => {
-    if (localStorage.getItem('bookmarks')) {
-      return localStorage.getItem('bookmarks')
+  const [storage, setStorage] = useState<string[]>([])
+  const [movieData, setMovieData] = useState<any[]>([])
+
+  useEffect(() => {
+    const bookmarks = localStorage.getItem('bookmarks')
+    if (bookmarks) {
+      setStorage(JSON.parse(bookmarks))
     }
-  })
-  const fetcher = (url: string) => fetch(url).then((res) => res.json())
-  const {
-    data: movieData,
-    error: movieDataError,
-    isLoading: movieDataIsLoading,
-  } = useSWR(`/api/movie/popular`, fetcher, {
-    refreshInterval: 0,
-  })
+  }, [])
+
+  useEffect(() => {
+    async function getMovieData(id: string | number) {
+      const response = await fetch(`/api/movie/${id}`)
+      const data = await response.json()
+      if (data.genres) {
+        data.genre_ids = data.genres.map((genre: { id: number }) => genre.id)
+        delete data.genres
+      }
+      setMovieData((prevMovieData) => [...prevMovieData, data])
+    }
+
+    storage.forEach((id) => {
+      getMovieData(id)
+    })
+  }, [storage])
+
+  useEffect(() => {
+    console.log(movieData)
+  }, [movieData])
 
   return (
     <>
       <Header></Header>
-      <div className="flex flex-col justify-between px-4">
+      <div className="flex flex-col justify-between px-4 gap-8">
         <h1 className="text-lg font-bold">Bookmarked</h1>
-        <section className="flex flex-col">
+        <section className="flex flex-col gap-4">
           {movieData &&
-            movieData.results.map((movie: any, index: number) => (
-              <MovieCard key={index} movie={movie}></MovieCard>
+            movieData.map((movie: any, index: number) => (
+              <MovieCardBig key={index} movie={movie}></MovieCardBig>
             ))}
         </section>
       </div>
