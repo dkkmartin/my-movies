@@ -9,7 +9,9 @@ import {
 } from '@nextui-org/react'
 import FluentMoviesAndTv16Regular from '../svg/FluentMoviesAndTv16Regular'
 import FluentTicketDiagonal16Regular from '../svg/FluentTicketDiagonal16Regular'
-import MaterialSymbolsLightBookmarkOutline from '../svg/MaterialSymbolsLightBookmarkOutline'
+import MaterialSymbolsLightBookmarkOutline, {
+  NavbarBookmark,
+} from '../svg/NavbarBookmark'
 
 export default function NavigationBar() {
   return (
@@ -33,7 +35,7 @@ export default function NavigationBar() {
             href="/bookmarked"
             variant="light"
           >
-            <MaterialSymbolsLightBookmarkOutline></MaterialSymbolsLightBookmarkOutline>
+            <NavbarBookmark></NavbarBookmark>
           </Button>
         </NavbarItem>
       </NavbarContent>

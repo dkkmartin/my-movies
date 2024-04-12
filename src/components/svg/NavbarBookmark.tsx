@@ -1,8 +1,8 @@
+'use client'
+
 import React, { SVGProps } from 'react'
 
-export function MaterialSymbolsLightBookmarkOutline(
-  props: SVGProps<SVGSVGElement>
-) {
+export function NavbarBookmark(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -18,4 +18,4 @@ export function MaterialSymbolsLightBookmarkOutline(
     </svg>
   )
 }
-export default MaterialSymbolsLightBookmarkOutline
+export default NavbarBookmark
