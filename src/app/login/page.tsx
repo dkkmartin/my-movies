@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 export default function Login() {
   const router = useRouter()
   const fetcher = (url: string) => fetch(url).then((res) => res.json())
-  const { data, error, isLoading } = useSWR(`/api/auth`, fetcher, {
+  const { data, error, isLoading } = useSWR(`/api/auth/request`, fetcher, {
     refreshInterval: 0,
   })
 

@@ -1,11 +1,16 @@
+import { cookies } from 'next/headers'
+
 export async function GET(request: Request) {
-  const url = `https://api.themoviedb.org/3/authentication/token/new?api_key=${process.env.API_KEY}`
+  const { searchParams } = new URL(request.url)
+  const token = searchParams.get('request_token')
+  const url = `https://api.themoviedb.org/3/authentication/session/new?api_key=${process.env.API_KEY}`
   const options = {
-    method: 'GET',
+    method: 'POST',
     headers: {
       accept: 'application/json',
-      //Authorization: `Bearer ${process.env.API_READ_KEY}`,
+      'content-type': 'application/json',
     },
+    body: JSON.stringify({ request_token: token }),
   }
   try {
     const res = await fetch(url, options)
@@ -13,6 +18,7 @@ export async function GET(request: Request) {
       throw new Error('Failed to fetch data: ' + res.statusText)
     }
     const data = await res.json()
+    cookies().set('SID', data.session_id)
     return Response.json(data)
   } catch (err) {
     console.log(err)
