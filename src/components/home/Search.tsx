@@ -3,43 +3,42 @@
 import { Input } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import { useDebounce } from '@uidotdev/usehooks'
 import MovieCardBig, { Movie } from '../movie/CardBig'
+import LoadingSpinner from '../loading/LoadingSpinner'
 
 export default function Search() {
   const fetcher = (url: string) => fetch(url).then((res) => res.json())
-  const [input, setInput] = useState('')
-  const [shouldFetch, setShouldFetch] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const debouncedSearchTerm = useDebounce(searchTerm, 300)
   const { data, error, isLoading } = useSWR(
-    shouldFetch ? `/api/movie/search/${input}` : null,
+    debouncedSearchTerm ? `/api/movie/search/${debouncedSearchTerm}` : null,
     fetcher,
     {
       refreshInterval: 0,
     }
   )
 
-  useEffect(() => {
-    if (input === undefined || input === '') {
-      setShouldFetch(false)
-    }
-  }, [input])
-
   return (
     <div className="p-4">
       <Input
-        value={input}
+        value={searchTerm}
         onChange={(e) => {
-          setInput(e.target.value)
-          setShouldFetch(true)
+          setSearchTerm(e.target.value)
         }}
         type="search"
         label="Search"
       ></Input>
-      <section className="flex flex-col gap-2 pt-4">
-        {data &&
-          data.results.map((movie: Movie, index: number) => (
-            <MovieCardBig key={index} movie={movie}></MovieCardBig>
-          ))}
-      </section>
+      {isLoading ? (
+        <LoadingSpinner></LoadingSpinner>
+      ) : (
+        <section className="flex flex-col gap-2 pt-4">
+          {data &&
+            data.results.map((movie: Movie, index: number) => (
+              <MovieCardBig key={index} movie={movie}></MovieCardBig>
+            ))}
+        </section>
+      )}
     </div>
   )
 }
