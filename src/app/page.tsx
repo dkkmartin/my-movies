@@ -5,9 +5,9 @@ import { Providers } from './providers'
 import NowShowing from '@/components/home/NowShowing'
 import Popular from '@/components/home/Popular'
 import { useSearchParams } from 'next/navigation'
-import setCookie from './actions/setCookie'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import Search from '@/components/home/Search'
 
 export default function Home() {
   const [shouldFetch, setShouldFetch] = useState(false)
@@ -32,6 +32,7 @@ export default function Home() {
     <Providers>
       <Header></Header>
       <main>
+        <Search></Search>
         <NowShowing></NowShowing>
         <Popular></Popular>
       </main>

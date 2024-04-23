@@ -1,6 +1,5 @@
 'use client'
 
-import { Providers } from '@/app/providers'
 import BackButton from '@/components/Buttons/Back'
 import Bookmark from '@/components/Buttons/Bookmark'
 import LoadingSpinnerScreen from '@/components/loading/LoadingSpinnerScreen'
@@ -57,11 +56,11 @@ export default function Page({ params }: { params: { id: string } }) {
     <main className="flex flex-col h-screen">
       <section className="h-[300px] grid-cols-1 relative">
         <BackButton className="z-10 absolute top-5 left-5" />
-        {data.videos.results ? (
+        {data.videos.results.length >= 1 ? (
           <ReactPlayer
             url={
               'https://www.youtube.com/watch?v=' +
-              (data.videos.results &&
+              (data.videos.results.length &&
                 (data.videos.results[0] as { key: string }).key)
             }
             height="100%"
