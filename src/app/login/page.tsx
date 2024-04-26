@@ -13,8 +13,12 @@ export default function Login() {
   })
 
   function handleClick() {
+    const redirectUrl =
+      process.env.NODE_ENV === 'production'
+        ? 'https://my-movies-taupe.vercel.app'
+        : 'http://localhost:3001'
     router.push(
-      `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=http://localhost:3001`
+      `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=${redirectUrl}`
     )
   }
 
