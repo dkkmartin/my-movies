@@ -31,10 +31,6 @@ export default function Bookmarked() {
     })
   }, [storage])
 
-  useEffect(() => {
-    console.log(movieData)
-  }, [movieData])
-
   return (
     <>
       <Header></Header>
