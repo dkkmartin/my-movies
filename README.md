@@ -1,8 +1,6 @@
-
 # My Movies
 
 My Movies is a web application built with Next.js and TypeScript. It allows users to search for movies and view detailed information about them.
-
 
 ## Features
 
@@ -20,6 +18,7 @@ My Movies is a web application built with Next.js and TypeScript. It allows user
 - NextUI for UI components
 - React player for videos
 - @uidotdev for debouncer hook
+
 ## Run Locally
 
 Clone the project
@@ -46,8 +45,6 @@ Start the server
   npm run start
 ```
 
-
 ## Demo
 
-Insert gif or link to demo
-
+[Demo](https://my-movies-taupe.vercel.app/)
