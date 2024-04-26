@@ -16,7 +16,7 @@ import MaterialSymbolsLightBookmarkOutline, {
 export default function NavigationBar() {
   return (
     <Navbar className="fixed top-[calc(100%-64px)]">
-      <NavbarContent className="sm:flex gap-4 w-full justify-around" justify="">
+      <NavbarContent className="sm:flex gap-24 w-full" justify="center">
         <NavbarItem>
           <Button isIconOnly as={Link} color="primary" href="/" variant="light">
             <FluentMoviesAndTv16Regular></FluentMoviesAndTv16Regular>
